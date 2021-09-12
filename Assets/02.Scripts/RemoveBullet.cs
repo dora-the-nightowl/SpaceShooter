@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RemoveBullet : MonoBehaviour
 {
+    public GameObject sparkEffect;
+
     // callback function, event
     void OnCollisionEnter(Collision coll)
     {
@@ -14,6 +16,13 @@ public class RemoveBullet : MonoBehaviour
         {
             Debug.Log("총알 충돌했음 !!");
             Destroy(coll.gameObject);
+
+            Instantiate(sparkEffect, coll.GetContact(0).point, Quaternion.identity);
         }
     }
 }
+/*
+    OnCollisionEnter    1
+    OnCollisionStay     n
+    OnCollisionExit     1
+*/
