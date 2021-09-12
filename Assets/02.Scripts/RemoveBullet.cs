@@ -39,4 +39,8 @@ public class RemoveBullet : MonoBehaviour
     오일러회전(Euler) x -> y -> z
     3차원 공간에서 오일러회전을 하게 되면 짐벌락(Gimbal Lock)이 생김
     짐벌락을 방지하기 위해 Quaternion 도입
+
+
+    AudioListener : 소리를 듣는 역할, scene에 1개만 존재해야 함.
+    AudioSource   : 소리를 발생시키는 역할, 복수 가능.
 */
