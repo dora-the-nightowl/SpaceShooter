@@ -14,6 +14,7 @@ public class FireCtrl : MonoBehaviour
     public Transform firePos;
     public AudioClip fireSfx;
 
+    [HideInInspector]
     public MeshRenderer muzzleFlash;
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class FireCtrl : MonoBehaviour
     {
         audio = GetComponent<AudioSource>();
         muzzleFlash = firePos.GetComponentInChildren<MeshRenderer>();
+        muzzleFlash.enabled = false;
     }
 
     // Update is called once per frame
@@ -42,10 +44,11 @@ public class FireCtrl : MonoBehaviour
         audio.PlayOneShot(fireSfx, 0.8f);
 
         // 총구화염 효과
-        ShowMuzzleFlash();
+        StartCoroutine(ShowMuzzleFlash());
     }
 
-    void ShowMuzzleFlash()
+    // coroutine 함수 - multi thread처럼 처리해줌
+    IEnumerator ShowMuzzleFlash()
     {
         /*
             총 4장으로 분리. (0, 0), (0.5, 0), (0, 0.5), (0.5, 0.5)
@@ -57,5 +60,14 @@ public class FireCtrl : MonoBehaviour
 
         Vector2 offset = new Vector2(Random.Range(0, 2) * 0.5f, Random.Range(0, 2) * 0.5f);
         muzzleFlash.material.mainTextureOffset = offset;
+
+        // MeshRenderer 컴포넌트를 활성화
+        muzzleFlash.enabled = true;
+
+        // coroutine을 이용해서 waiting 걸어주기
+        yield return new WaitForSeconds(0.2f);
+
+        // MeshRenderer 컴포넌트를 비활성화
+        muzzleFlash.enabled = false;
     }
 }
