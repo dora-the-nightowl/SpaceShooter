@@ -33,6 +33,8 @@ public class PlayerCtrl : MonoBehaviour
     void Start()
     {
         // 컴포넌트를 추출해서 변수에 대입
+        // anim = this.gameObject.GetComponent<Animation>();
+        // 편의상 this.gameObject는 생략해서 사용
         anim = GetComponent<Animation>();
 
         anim.Play("Idle");
@@ -41,6 +43,7 @@ public class PlayerCtrl : MonoBehaviour
     // Update is called once per frame
     // 프레임 드랍 현상 때문에 호출이 불규칙적
     // 렌더링하는 주기와 동일
+    // 최대한 간소화 하는게 좋음
     // ex. 주인공 이동 로직
     void Update()
     {
@@ -71,6 +74,33 @@ public class PlayerCtrl : MonoBehaviour
             Vector3.one         = Vector3(1, 1, 1)
             Vector3.zero        = Vector3.(0, 0, 0)
         */
+
+        // 애니메이션 처리
+        PlayerAnim(h, v);
+    }
+
+    void PlayerAnim(float h, float v)
+    {
+        if (v >= 0.1f)  // 전진
+        {
+            // 애니메이션을 부드럽게 전환
+            anim.CrossFade("RunF", 0.3f);
+        }
+        else if (v <= -0.1f)  // 후진
+        {
+            anim.CrossFade("RunB", 0.3f);
+        }
+        else if (h >= 0.1f)  // 오른쪽
+        {
+            anim.CrossFade("RunR", 0.3f);
+        }
+        else if (h <= -0.1f)  // 왼쪽
+        {
+            anim.CrossFade("RunL", 0.3f);
+        }
+        else {
+            anim.CrossFade("Idle", 0.3f);
+        }
     }
 
     /*
