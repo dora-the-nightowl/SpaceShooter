@@ -14,10 +14,18 @@ public class RemoveBullet : MonoBehaviour
         // 메모리 release할 때 garbage collection 때문에 렉 걸리기 때문
         if (coll.gameObject.CompareTag("BULLET"))
         {
-            Debug.Log("총알 충돌했음 !!");
             Destroy(coll.gameObject);
 
-            Instantiate(sparkEffect, coll.GetContact(0).point, Quaternion.identity);
+            ContactPoint cp = coll.GetContact(0);
+            // 충돌한 객체의 법선벡터를 반대 방향으로 뒤집음
+            Vector3 _normal = -cp.normal;
+
+            // 각도를 쿼터니언 타입으로 변환
+            Quaternion rot = Quaternion.LookRotation(_normal);
+
+            // spark effect 생성 후 0.4s delay 뒤 삭제
+            GameObject obj = Instantiate(sparkEffect, cp.point, rot);
+            Destroy(obj, 0.4f);
         }
     }
 }
@@ -25,4 +33,10 @@ public class RemoveBullet : MonoBehaviour
     OnCollisionEnter    1
     OnCollisionStay     n
     OnCollisionExit     1
+
+    Quaternion - x, y, z, w : 복소수 4차원벡터
+
+    오일러회전(Euler) x -> y -> z
+    3차원 공간에서 오일러회전을 하게 되면 짐벌락(Gimbal Lock)이 생김
+    짐벌락을 방지하기 위해 Quaternion 도입
 */
