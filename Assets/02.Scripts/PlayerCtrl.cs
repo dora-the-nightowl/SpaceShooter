@@ -110,6 +110,18 @@ public class PlayerCtrl : MonoBehaviour
     }
 
     /*
+        void OnCollisionEnter, ~ Exit, ~ Stay
+        void OnTriggerEnter, ~ Exit, ~ Stay  <- 단순 충돌 여부만을 감지할 때 사용하기
+    */
+    void OnTriggerEnter(Collider coll)
+    {
+        if (coll.CompareTag("PUNCH"))
+        {
+            Debug.Log($"Punch = {coll.gameObject.name}");
+        }
+    }
+
+    /*
     void FixedUpdate()
     {
         // 호출되는 간격이 규칙적. (0.02s 간격으로 호출)
