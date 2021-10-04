@@ -40,11 +40,11 @@ public class PlayerCtrl : MonoBehaviour
         anim.Play("Idle");
     }
 
-    // Update is called once per frame
-    // 프레임 드랍 현상 때문에 호출이 불규칙적
-    // 렌더링하는 주기와 동일
-    // 최대한 간소화 하는게 좋음
-    // ex. 주인공 이동 로직
+    /* Update is called once per frame
+    프레임 드랍 현상 때문에 호출이 불규칙적
+    렌더링하는 주기와 동일
+    최대한 간소화 하는게 좋음
+    ex. 주인공 이동 로직 */
     void Update()
     {
         // -1.0f ~ 0.0f ~ +1.0f 값이 return됨.

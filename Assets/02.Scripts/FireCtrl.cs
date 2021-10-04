@@ -14,7 +14,8 @@ public class FireCtrl : MonoBehaviour
     public Transform firePos;
     public AudioClip fireSfx;
 
-    [HideInInspector]
+    [HideInInspector]  // Unity 문법
+    // C# 문법인 [System.NonSerialized] 도 사용 가능
     public MeshRenderer muzzleFlash;
 
     // Start is called before the first frame update
