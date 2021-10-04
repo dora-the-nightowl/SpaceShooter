@@ -123,6 +123,7 @@ public class MonsterCtrl : MonoBehaviour
         StopAllCoroutines();
         agent.isStopped = true;
         anim.SetTrigger(hashDie);
+        GetComponent<CapsuleCollider>().enabled = false;
     }
 }
 
