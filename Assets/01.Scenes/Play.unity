@@ -989,7 +989,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.14042033, y: 0.000000019046713, z: -0.0000000027013103, w: 0.990092}
+  m_LocalRotation: {x: 0.14042033, y: -0.000000019046716, z: 0.000000002701311, w: 0.990092}
   m_LocalPosition: {x: 0, y: 2.53, z: -2.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1092,7 +1092,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965916349}
-  m_LocalRotation: {x: 0.14042033, y: 0.000000019046713, z: -0.0000000027013103, w: 0.990092}
+  m_LocalRotation: {x: 0.14042033, y: -0.000000019046716, z: 0.000000002701311, w: 0.990092}
   m_LocalPosition: {x: 0, y: 2.53, z: -2.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1247,6 +1247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da974476d377ad40a0a9673da3f19b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: []
+  monsterPrefab: {fileID: 0}
+  createTime: 3
 --- !u!4 &1055076500
 Transform:
   m_ObjectHideFlags: 0
