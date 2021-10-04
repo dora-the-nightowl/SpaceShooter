@@ -28,6 +28,9 @@ public class MonsterCtrl : MonoBehaviour
     private int hashTrace = Animator.StringToHash("IsTrace");
     private int hashAttack = Animator.StringToHash("IsAttack");
     private int hashHit = Animator.StringToHash("Hit");
+    private int hashDie = Animator.StringToHash("Die");
+
+    private float hp = 100.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -106,7 +109,20 @@ public class MonsterCtrl : MonoBehaviour
         {
             Destroy(coll.gameObject);
             anim.SetTrigger(hashHit);
+            hp -= 20.0f;
+            if (hp <= 0.0f)
+            {
+                MonsterDie();
+            }
         }
+    }
+
+    void MonsterDie()
+    {
+        isDie = true;
+        StopAllCoroutines();
+        agent.isStopped = true;
+        anim.SetTrigger(hashDie);
     }
 }
 
