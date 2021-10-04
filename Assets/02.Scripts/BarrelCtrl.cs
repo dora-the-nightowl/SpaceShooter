@@ -5,6 +5,13 @@ using UnityEngine;
 public class BarrelCtrl : MonoBehaviour
 {
     private int hitCount = 0;
+    // 폭발효과 prefab
+    [SerializeField] private GameObject expEffect;
+
+    void Start()
+    {
+        expEffect = Resources.Load<GameObject>("BigExplosionEffect");
+    }
 
     void OnCollisionEnter(Collision coll)
     {
@@ -25,5 +32,6 @@ public class BarrelCtrl : MonoBehaviour
 
         // 2초 후에 드럼통 오브젝트 삭제
         Destroy(this.gameObject, 2.0f);
+        Instantiate(expEffect, transform.position, Quaternion.identity);
     }
 }
