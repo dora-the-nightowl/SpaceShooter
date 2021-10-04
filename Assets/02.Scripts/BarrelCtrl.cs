@@ -7,10 +7,19 @@ public class BarrelCtrl : MonoBehaviour
     private int hitCount = 0;
     // 폭발효과 prefab
     [SerializeField] private GameObject expEffect;
+    // texture를 저장하기 위한 배열
+    public Texture[] textures;
+    // 하위에 있는 MeshRenderer 컴포넌트를 저장하기 위한 변수
+    public MeshRenderer renderer;
 
     void Start()
     {
         expEffect = Resources.Load<GameObject>("BigExplosionEffect");
+        renderer = GetComponentInChildren<MeshRenderer>();
+
+        int idx = Random.Range(0, textures.Length);  // Random.Range(0, 3) => 0, 1, 2
+        // 하위에 있는 MeshRenderer에 연결된 material의 texture를 변경
+        renderer.material.mainTexture = textures[idx];
     }
 
     void OnCollisionEnter(Collision coll)
