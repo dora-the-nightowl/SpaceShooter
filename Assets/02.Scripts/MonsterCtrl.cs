@@ -25,6 +25,8 @@ public class MonsterCtrl : MonoBehaviour
     private Animator anim;
 
     public bool isDie = false;
+    private int hashTrace = Animator.StringToHash("IsTrace");
+    private int hashAttack = Animator.StringToHash("IsAttack");
 
     // Start is called before the first frame update
     void Start()
@@ -74,17 +76,19 @@ public class MonsterCtrl : MonoBehaviour
                     // 추적 정지
                     agent.isStopped = true;
                     // Idle 애니메이션으로 되돌아가기
-                    anim.SetBool("IsTrace", false);
+                    anim.SetBool(hashTrace, false);
                     break;
                 case State.ATTACK:
-                    //
+                    // Attack 애니메이션 실행
+                    anim.SetBool(hashAttack, true);
                     break;
                 case State.TRACE:
                     // 추적 시작
                     agent.SetDestination(playerTr.position);
                     agent.isStopped = false;
                     // Walk 애니메이션
-                    anim.SetBool("IsTrace", true);
+                    anim.SetBool(hashTrace, true);
+                    anim.SetBool(hashAttack, false);
                     break;
                 case State.DIE:
                     //
