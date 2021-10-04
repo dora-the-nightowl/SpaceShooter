@@ -27,6 +27,7 @@ public class MonsterCtrl : MonoBehaviour
     public bool isDie = false;
     private int hashTrace = Animator.StringToHash("IsTrace");
     private int hashAttack = Animator.StringToHash("IsAttack");
+    private int hashHit = Animator.StringToHash("Hit");
 
     // Start is called before the first frame update
     void Start()
@@ -96,6 +97,15 @@ public class MonsterCtrl : MonoBehaviour
             }
 
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        if (coll.collider.CompareTag("BULLET"))
+        {
+            Destroy(coll.gameObject);
+            anim.SetTrigger(hashHit);
         }
     }
 }

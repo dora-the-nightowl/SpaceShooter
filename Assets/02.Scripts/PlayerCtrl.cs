@@ -26,7 +26,8 @@ public class PlayerCtrl : MonoBehaviour
 
     // 전역변수 이동, 회전 속도
     public float moveSpeed = 8.0f;
-    public float turnSpeed = 100.0f;
+    public float _turnSpeed = 100.0f;
+    private float turnSpeed;
 
     // Start is called before the first frame update
     // coroutine으로 실행
@@ -39,8 +40,10 @@ public class PlayerCtrl : MonoBehaviour
 
         anim.Play("Idle");
 
+        // garbage 좌표값 제거
         turnSpeed = 0.0f;
         yield return new WaitForSeconds(0.3f);
+        turnSpeed = _turnSpeed;
     }
 
     /* Update is called once per frame
