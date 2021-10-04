@@ -29,6 +29,10 @@ public class PlayerCtrl : MonoBehaviour
     public float _turnSpeed = 100.0f;
     private float turnSpeed;
 
+    // HP
+    private float initHp = 100.0f;  // 초기 생명수치
+    private float currHp = 100.0f;  // 현재 생명수치
+
     // Start is called before the first frame update
     // coroutine으로 실행
     IEnumerator Start()
@@ -115,9 +119,26 @@ public class PlayerCtrl : MonoBehaviour
     */
     void OnTriggerEnter(Collider coll)
     {
-        if (coll.CompareTag("PUNCH"))
+        if (currHp > 0.0f && coll.CompareTag("PUNCH"))
         {
-            Debug.Log($"Punch = {coll.gameObject.name}");
+            currHp -= 10.0f;
+            if (currHp <= 0.0f)
+            {
+                PlayerDie();
+            }
+        }
+    }
+
+    void PlayerDie()
+    {
+        // 스테이지에 있는 모든 몬스터들을 Tag로 검색
+        GameObject[] monsters = GameObject.FindGameObjectsWithTag("MONSTER");
+
+        // foreach 구문은 배열, 리스트에서 자주 사용
+        foreach(GameObject monster in monsters)
+        {
+            monster.SendMessage("YouWin", SendMessageOptions.DontRequireReceiver);
+            // YouWin 메세지 없으면 무시하라는 뜻
         }
     }
 

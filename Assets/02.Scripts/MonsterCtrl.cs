@@ -29,6 +29,8 @@ public class MonsterCtrl : MonoBehaviour
     private int hashAttack = Animator.StringToHash("IsAttack");
     private int hashHit = Animator.StringToHash("Hit");
     private int hashDie = Animator.StringToHash("Die");
+    private int hashPlayerDie = Animator.StringToHash("PlayerDie");
+    private int hashAniSpeed = Animator.StringToHash("AniSpeed");
 
     private float hp = 100.0f;
 
@@ -124,6 +126,15 @@ public class MonsterCtrl : MonoBehaviour
         agent.isStopped = true;
         anim.SetTrigger(hashDie);
         GetComponent<CapsuleCollider>().enabled = false;
+    }
+
+    void YouWin()
+    {
+        StopAllCoroutines();
+
+        agent.isStopped = true;
+        anim.SetFloat(hashAniSpeed, Random.Range(0.8f, 1.5f));
+        anim.SetTrigger(hashPlayerDie);
     }
 }
 
