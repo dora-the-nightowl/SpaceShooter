@@ -41,6 +41,7 @@ public class BarrelCtrl : MonoBehaviour
 
         // 2초 후에 드럼통 오브젝트 삭제
         Destroy(this.gameObject, 2.0f);
-        Instantiate(expEffect, transform.position, Quaternion.identity);
+        GameObject obj = Instantiate(expEffect, transform.position, Quaternion.identity);
+        Destroy(obj, 5.0f);
     }
 }

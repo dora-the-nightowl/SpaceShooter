@@ -19,8 +19,10 @@ public class MonsterCtrl : MonoBehaviour
     public float attackDist = 2.0f;  // 공격 사정거리
     public float traceDist = 10.0f;  // 추적 사정거리
 
-    public Transform playerTr;
+    private Transform playerTr;
+    private Transform monsterTr;
     private NavMeshAgent agent;
+    private Animator anim;
 
     public bool isDie = false;
 
@@ -28,13 +30,12 @@ public class MonsterCtrl : MonoBehaviour
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        agent = GetComponent<NavMeshAgent>();    
-    }
+        monsterTr = GetComponent<Transform>();  // monsterTr = transform;와 같은 코드
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponent<Animator>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        agent.SetDestination(playerTr.position);
+        StartCoroutine(CheckMonsterState());
+        StartCoroutine(MonsterAction());
     }
 
     // 몬스터의 상태를 체크하는 coroutine
@@ -42,6 +43,54 @@ public class MonsterCtrl : MonoBehaviour
     {
         while (!isDie)
         {
+            // 몬스터와 주인공 간의 거리를 계산
+            float distance = Vector3.Distance(monsterTr.position, playerTr.position);
+            
+            if (distance <= attackDist)  // 공격사정거리 이내일 경우
+            {
+                state = State.ATTACK;
+            }
+            else if (distance <= traceDist)  // 추적사정거리 이내인 경우
+            {
+                state = State.TRACE;
+            }
+            else
+            {
+                state = State.IDLE;
+            }
+
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    // 몬스터의 상태값에 따라서 행동을 처리하는 coroutine
+    IEnumerator MonsterAction()
+    {
+        while (!isDie)
+        {
+            switch (state)
+            {
+                case State.IDLE:
+                    // 추적 정지
+                    agent.isStopped = true;
+                    // Idle 애니메이션으로 되돌아가기
+                    anim.SetBool("IsTrace", false);
+                    break;
+                case State.ATTACK:
+                    //
+                    break;
+                case State.TRACE:
+                    // 추적 시작
+                    agent.SetDestination(playerTr.position);
+                    agent.isStopped = false;
+                    // Walk 애니메이션
+                    anim.SetBool("IsTrace", true);
+                    break;
+                case State.DIE:
+                    //
+                    break;
+            }
+
             yield return new WaitForSeconds(0.3f);
         }
     }
